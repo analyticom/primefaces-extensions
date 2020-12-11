@@ -21,6 +21,11 @@
     </licenses>
 
     <repositories>
+      <repository>
+        <id>analyticom-mvn-extlibs-local</id>
+        <name>jfrog.analyticom.de-extlibs</name>
+        <url>https://jfrog.analyticom.de/artifactory/analyticom-mvn-extlibs-local</url>
+      </repository>
         <repository>
             <id>primefaces</id>
             <name>PrimeFaces Maven Repository</name>
@@ -498,12 +503,14 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+          <id>analyticom-mvn-extlibs-local</id>
+          <name>jfrog.analyticom.de-extlibs</name>
+          <url>https://jfrog.analyticom.de/artifactory/analyticom-mvn-extlibs-local</url>
         </snapshotRepository>
         <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+          <id>analyticom-mvn-extlibs-local</id>
+          <name>jfrog.analyticom.de-extlibs</name>
+          <url>https://jfrog.analyticom.de/artifactory/analyticom-mvn-extlibs-local</url>
         </repository>
     </distributionManagement>
 
