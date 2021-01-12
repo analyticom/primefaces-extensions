@@ -1,23 +1,30 @@
 /*
- * Copyright 2011-2020 PrimeFaces Extensions
+ * Copyright (c) 2011-2021 PrimeFaces Extensions
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
  */
 package org.primefaces.extensions.component.head;
 
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -30,19 +37,18 @@ import org.primefaces.extensions.util.Attrs;
  * </p>
  *
  * <pre>
-   - first facet if defined
-   - Theme CSS
-   - JSF, PF, PF Extensions CSS resources
-   - middle facet if defined
-   - JSF, PF, PF Extensions JS resources
-   - title
-   - shortcut icon
-   - h:head content (encoded by super class at encodeChildren)
-   - last facet if defined
+ * - first facet if defined
+ * - Theme CSS
+ * - JSF, PF, PF Extensions CSS resources
+ * - middle facet if defined
+ * - JSF, PF, PF Extensions JS resources
+ * - title
+ * - shortcut icon
+ * - h:head content (encoded by super class at encodeChildren)
+ * - last facet if defined
  * </pre>
  *
- * @author Thomas Andraschko / last modified by $Author$
- * @version $Revision$
+ * @author Thomas Andraschko
  * @since 0.2
  */
 public class ExtHeadRenderer extends org.primefaces.renderkit.HeadRenderer {
@@ -54,7 +60,7 @@ public class ExtHeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 
         // encode title and shortcut icon
         encodeTitle(extHead, writer);
-        encodeShortcutIcon(extHead, writer);
+        encodeShortcutIcon(context, extHead, writer);
 
         super.encodeEnd(context, component);
     }
@@ -67,11 +73,12 @@ public class ExtHeadRenderer extends org.primefaces.renderkit.HeadRenderer {
         }
     }
 
-    private void encodeShortcutIcon(final ExtHead extHead, final ResponseWriter writer) throws IOException {
+    private void encodeShortcutIcon(final FacesContext context, final ExtHead extHead, final ResponseWriter writer) throws IOException {
         if (extHead.getShortcutIcon() != null) {
+            ExternalContext externalContext = context.getExternalContext();
             writer.startElement("link", null);
             writer.writeAttribute("rel", "shortcut icon", null);
-            writer.writeAttribute("href", extHead.getShortcutIcon(), null);
+            writer.writeAttribute("href", externalContext.encodeResourceURL(extHead.getShortcutIcon()), null);
             writer.endElement("link");
         }
     }

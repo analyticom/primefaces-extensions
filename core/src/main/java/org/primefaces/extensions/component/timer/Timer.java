@@ -1,19 +1,27 @@
 /*
- * Copyright 2011-2020 PrimeFaces Extensions
+ * Copyright (c) 2011-2021 PrimeFaces Extensions
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
  */
 package org.primefaces.extensions.component.timer;
+
+import java.util.Locale;
 
 import javax.el.MethodExpression;
 import javax.faces.application.ResourceDependency;
@@ -23,6 +31,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.Constants;
+import org.primefaces.util.LocaleUtils;
 
 /**
  * Timer component
@@ -44,6 +53,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     public static final String STYLE_CLASS = "ui-timer ui-widget ui-widget-header ui-corner-all";
     private static final int DEFAULT_TIMEOUT = 10;
     private static final int DEFAULT_INTERVAL_MS = 1000;
+
+    private Locale appropriateLocale;
 
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
@@ -75,6 +86,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         ignoreAutoUpdate,
         visible,
         forward,
+        locale,
         formatFunction,
         partialSubmitFilter,
         form,
@@ -91,6 +103,14 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    public Locale calculateLocale() {
+        if (appropriateLocale == null) {
+            final FacesContext fc = FacesContext.getCurrentInstance();
+            appropriateLocale = LocaleUtils.resolveLocale(fc, getLocale(), getClientId(fc));
+        }
+        return appropriateLocale;
     }
 
     public boolean isSingleRun() {
@@ -343,6 +363,14 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
 
     public void setForward(final boolean forward) {
         getStateHelper().put(PropertyKeys.forward, forward);
+    }
+
+    public Object getLocale() {
+        return getStateHelper().eval(PropertyKeys.locale, null);
+    }
+
+    public void setLocale(final Object locale) {
+        getStateHelper().put(PropertyKeys.locale, locale);
     }
 
     @Override

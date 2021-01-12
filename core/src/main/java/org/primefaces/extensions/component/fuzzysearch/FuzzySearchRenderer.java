@@ -1,17 +1,23 @@
 /*
- * Copyright 2011-2020 PrimeFaces Extensions
+ * Copyright (c) 2011-2021 PrimeFaces Extensions
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
  */
 package org.primefaces.extensions.component.fuzzysearch;
 
@@ -77,10 +83,12 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         final List<SelectItem> selectItems = getSelectItems(context, fuzzySearch);
         final int selectItemsSize = selectItems.size();
         final String style = fuzzySearch.getStyle();
-        String styleClass = fuzzySearch.getStyleClass();
-        styleClass = (styleClass == null) ? FuzzySearch.STYLE_CLASS : FuzzySearch.STYLE_CLASS + " " + styleClass;
-        styleClass = styleClass + " ui-buttonset-" + selectItemsSize;
-        styleClass = !fuzzySearch.isValid() ? styleClass + " ui-state-error" : styleClass;
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(FuzzySearch.STYLE_CLASS)
+                    .add(fuzzySearch.getStyleClass())
+                    .add("ui-buttonset-" + selectItemsSize)
+                    .add(!fuzzySearch.isValid(), "ui-state-error")
+                    .build();
 
         writer.startElement("div", fuzzySearch);
         writer.writeAttribute("id", clientId, "id");
@@ -93,7 +101,7 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         writer.writeAttribute("id", clientId + INPUT, null);
         writer.writeAttribute("name", clientId + INPUT, null);
         writer.writeAttribute("placeholder", fuzzySearch.getPlaceholder(), null);
-        writer.writeAttribute("class", createStyleClass(fuzzySearch), "styleClass");
+        writer.writeAttribute("class", createStyleClass(fuzzySearch, InputText.STYLE_CLASS), "styleClass");
         renderPassThruAttributes(context, fuzzySearch, HTML.TAB_INDEX);
         renderDomEvents(context, fuzzySearch, HTML.BLUR_FOCUS_EVENTS);
         renderAccessibilityAttributes(context, fuzzySearch);
@@ -129,8 +137,10 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         final String itemValueAsString = getOptionAsString(context, fuzzySearch, fuzzySearch.getConverter(), option.getValue());
 
         final String resultStyle = fuzzySearch.getResultStyle();
-        String resultStyleClass = fuzzySearch.getResultStyleClass();
-        resultStyleClass = (resultStyleClass == null) ? FuzzySearch.ITEM_CLASS : FuzzySearch.ITEM_CLASS + " " + resultStyleClass;
+        final String resultStyleClass = getStyleClassBuilder(context)
+                    .add(FuzzySearch.ITEM_CLASS)
+                    .add(fuzzySearch.getResultStyleClass())
+                    .build();
 
         // results
         writer.startElement("div", null);
@@ -176,17 +186,6 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         encodeClientBehaviors(context, fuzzySearch);
 
         wb.finish();
-    }
-
-    protected String createStyleClass(final FuzzySearch inputText) {
-        String defaultClass = InputText.STYLE_CLASS;
-        defaultClass = inputText.isValid() ? defaultClass : defaultClass + " ui-state-error";
-        defaultClass = !inputText.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
-
-        String styleClass = inputText.getStyleClass();
-        styleClass = styleClass == null ? defaultClass : defaultClass + " " + styleClass;
-
-        return styleClass;
     }
 
     @Override

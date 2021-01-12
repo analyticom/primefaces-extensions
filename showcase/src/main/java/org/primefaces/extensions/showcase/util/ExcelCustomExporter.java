@@ -1,17 +1,23 @@
 /*
- * Copyright 2011-2020 PrimeFaces Extensions
+ * Copyright (c) 2011-2021 PrimeFaces Extensions
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
  */
 package org.primefaces.extensions.showcase.util;
 
@@ -463,7 +469,7 @@ public class ExcelCustomExporter extends Exporter {
                     for (UIComponent rowComponent : row.getChildren()) {
                         UIColumn column = (UIColumn) rowComponent;
                         String value = null;
-                        if (facetType.equalsIgnoreCase("header")) {
+                        if ("header".equalsIgnoreCase(facetType)) {
                             value = column.getHeaderText();
                         }
                         else {
@@ -553,7 +559,7 @@ public class ExcelCustomExporter extends Exporter {
                     for (UIComponent rowComponent : row.getChildren()) {
                         UIColumn column = (UIColumn) rowComponent;
                         String value = null;
-                        if (facetType.equalsIgnoreCase("header")) {
+                        if ("header".equalsIgnoreCase(facetType)) {
                             value = column.getHeaderText();
                         }
                         else {
@@ -843,7 +849,7 @@ public class ExcelCustomExporter extends Exporter {
         Cell cell = row.createCell(cellIndex);
         String value = component == null ? "" : exportValue(FacesContext.getCurrentInstance(), component);
         cell.setCellValue(new XSSFRichTextString(value));
-        if (type.equalsIgnoreCase("facet")) {
+        if ("facet".equalsIgnoreCase(type)) {
             // addColumnAlignments(component,facetStyle);
             cell.setCellStyle(facetStyle);
         }
@@ -873,7 +879,7 @@ public class ExcelCustomExporter extends Exporter {
 
         cell.setCellValue(new XSSFRichTextString(builder.toString()));
 
-        if (type.equalsIgnoreCase("facet")) {
+        if ("facet".equalsIgnoreCase(type)) {
             // addColumnAlignments(components,facetStyle);
             cell.setCellStyle(facetStyle);
         }
@@ -940,17 +946,17 @@ public class ExcelCustomExporter extends Exporter {
             cellFont.setFontHeightInPoints(cellFontSize);
         }
 
-        if (cellFontStyle.equalsIgnoreCase("BOLD")) {
+        if ("BOLD".equalsIgnoreCase(cellFontStyle)) {
             cellFont.setBold(true);
         }
-        if (cellFontStyle.equalsIgnoreCase("ITALIC")) {
+        if ("ITALIC".equalsIgnoreCase(cellFontStyle)) {
             cellFont.setItalic(true);
         }
 
-        if (facetFontStyle.equalsIgnoreCase("BOLD")) {
+        if ("BOLD".equalsIgnoreCase(facetFontStyle)) {
             facetFont.setBold(true);
         }
-        if (facetFontStyle.equalsIgnoreCase("ITALIC")) {
+        if ("ITALIC".equalsIgnoreCase(facetFontStyle)) {
             facetFont.setItalic(true);
         }
 

@@ -1640,7 +1640,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Set to false to hide the counter. The listener will be fired anyway.]]>
+                <![CDATA[Set to false to hide the counter. The listener will be fired anyway. Default is true.]]>
             </description>
             <name>visible</name>
             <required>false</required>
@@ -5806,7 +5806,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[set to true to hide the timer. The listener will be fired anyway]]>
+                <![CDATA[set to false to hide the timer. The listener will be fired anyway. Default is true.]]>
             </description>
             <name>visible</name>
             <required>false</required>
@@ -5987,6 +5987,14 @@
             <name>forward</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]>
+            </description>
+            <name>locale</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>

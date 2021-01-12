@@ -1,17 +1,23 @@
 /*
- * Copyright 2011-2020 PrimeFaces Extensions
+ * Copyright (c) 2011-2021 PrimeFaces Extensions
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
  */
 package org.primefaces.extensions.component.tristatemanycheckbox;
 
@@ -103,8 +109,10 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = checkbox.getClientId(context);
         final String style = checkbox.getStyle();
-        String styleClass = checkbox.getStyleClass();
-        styleClass = styleClass == null ? SelectManyCheckbox.STYLE_CLASS : SelectManyCheckbox.STYLE_CLASS + " " + styleClass;
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(SelectManyCheckbox.STYLE_CLASS)
+                    .add(checkbox.getStyleClass())
+                    .build();
 
         writer.startElement("table", checkbox);
         writer.writeAttribute("id", clientId, "id");
@@ -125,7 +133,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         Map<String, Object> values = getValues(checkbox);
         final Map<String, Object> submittedMap = getSubmittedFromComp(checkbox);
         final String layout = checkbox.getLayout();
-        final boolean pageDirection = layout != null && layout.equals("pageDirection");
+        final boolean pageDirection = layout != null && "pageDirection".equals(layout);
 
         if (submittedMap != null) {
             values = submittedMap;
@@ -214,9 +222,11 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
     protected void encodeOptionOutput(final FacesContext context, final TriStateManyCheckbox checkbox, final int valCheck,
                 final boolean disabled) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        String styleClass = HTML.CHECKBOX_BOX_CLASS;
-        styleClass = valCheck == 1 || valCheck == 2 ? styleClass + " ui-state-active" : styleClass;
-        styleClass = disabled ? styleClass + " ui-state-disabled" : styleClass;
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(HTML.CHECKBOX_BOX_CLASS)
+                    .add(valCheck == 1 || valCheck == 2, "ui-state-active")
+                    .add(disabled, "ui-state-disabled")
+                    .build();
 
         // if stateIcon is defined use it insted of default icons.
         final String stateOneIconClass = checkbox.getStateOneIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateOneIcon()
