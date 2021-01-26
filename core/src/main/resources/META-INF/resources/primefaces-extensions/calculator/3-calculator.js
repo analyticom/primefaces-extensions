@@ -37,6 +37,7 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
         } else {
             this._applyCalculator(input, cfg);
         }
+
     },
 
     /**

@@ -386,13 +386,11 @@
 
             // position with the ui position utility, if loaded
             if ((!inst.inline) && (typeof $.ui.position == 'object')) {
-                inst.tpDiv.position({
+                inst.tpDiv.css({left: '0px', top: '0px'}).position({
                     of: inst.input,
                     my: $.fgtimepicker._get(inst, 'myPosition'),
                     at: $.fgtimepicker._get(inst, 'atPosition'),
-                    // offset: $( "#offset" ).val(),
-                    // using: using,
-                    collision: 'flip'
+                    collision: 'flipfit'
                 });
                 var offset = inst.tpDiv.offset();
                 $.fgtimepicker._pos = [offset.top, offset.left];
@@ -656,20 +654,22 @@
 
             if (showButtonPanel) {
                 var buttonPanel = '<tr><td colspan="3"><div class="ui-timepicker-buttonpane ui-widget-content">';
+                var btnClasses = 'ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only';
+                var btnSpan = '<span class="ui-button-text" data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g, "\\") + '">';
                 if (showNowButton) {
-                    buttonPanel += '<button type="button" class="ui-timepicker-now ui-state-default ui-corner-all" '
+                    buttonPanel += '<button type="button" class="ui-timepicker-now ' + btnClasses + '" '
                         + ' data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g, "\\") + '" >'
-                        + nowButtonText + '</button>';
+                        + btnSpan + nowButtonText + '</span></button>';
                 }
                 if (showDeselectButton) {
-                    buttonPanel += '<button type="button" class="ui-timepicker-deselect ui-state-default ui-corner-all" '
+                    buttonPanel += '<button type="button" class="ui-timepicker-deselect ' + btnClasses + '" '
                         + ' data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g, "\\") + '" >'
-                        + deselectButtonText + '</button>';
+                        + btnSpan + deselectButtonText + '</span></button>';
                 }
                 if (showCloseButton) {
-                    buttonPanel += '<button type="button" class="ui-timepicker-close ui-state-default ui-corner-all" '
+                    buttonPanel += '<button type="button" class="ui-timepicker-close ' + btnClasses + '" '
                         + ' data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g, "\\") + '" >'
-                        + closeButtonText + '</button>';
+                        + btnSpan + closeButtonText + '</span></button>';
                 }
 
                 html += buttonPanel + '</div></td></tr>';
