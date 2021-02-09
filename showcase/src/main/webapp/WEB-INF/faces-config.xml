@@ -9,17 +9,25 @@
             org.primefaces.application.exceptionhandler.PrimeExceptionHandlerELResolver
         </el-resolver>
         <resource-handler>org.omnifaces.resourcehandler.CombinedResourceHandler</resource-handler>
+        <system-event-listener>
+            <system-event-listener-class>org.primefaces.extensions.application.PrimeFacesScriptProcessor</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>
+            <source-class>javax.faces.component.UIViewRoot</source-class>
+        </system-event-listener>
     </application>
-    
+
+    <lifecycle>
+        <phase-listener>org.primefaces.extensions.application.PrimeFacesResourceProcessor</phase-listener>
+    </lifecycle>
+
     <converter>
         <converter-id>themeConverter</converter-id>
         <converter-class>org.primefaces.extensions.showcase.converter.ThemeConverter</converter-class>
     </converter>
 
     <factory>
-        <exception-handler-factory>
-            org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory
-        </exception-handler-factory>
+        <faces-context-factory>org.primefaces.extensions.application.Html5ContextFactory</faces-context-factory>
+        <exception-handler-factory>org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory</exception-handler-factory>
     </factory>
 
     <render-kit>
@@ -28,6 +36,19 @@
             <renderer-type>org.primefaces.component.CommandButtonRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.renderer.CommandButtonSingleClickRenderer</renderer-class>
         </renderer>
+        <renderer>
+            <component-family>javax.faces.Output</component-family>
+            <renderer-type>javax.faces.Head</renderer-type>
+            <renderer-class>org.apache.myfaces.renderkit.html.HtmlHeadRenderer</renderer-class>
+        </renderer>
     </render-kit>
+
+    <faces-config-extension>
+        <facelets-processing>
+            <file-extension>.xhtml</file-extension>
+            <process-as>xhtml</process-as>
+            <oam-compress-spaces>true</oam-compress-spaces>
+        </facelets-processing>
+    </faces-config-extension>
 
 </faces-config>

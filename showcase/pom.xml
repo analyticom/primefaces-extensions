@@ -25,15 +25,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.basedir>${project.parent.basedir}</main.basedir>
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
-        <primefaces-extensions.new-components>renderers;timeago;fab;creditcard;fuzzysearch;counter;codeScanner</primefaces-extensions.new-components>
+        <primefaces-extensions.new-components>renderers;timeago;fab;creditcard;fuzzysearch;counter;codeScanner;lightSwitch
+        </primefaces-extensions.new-components>
         <primefaces-extensions.updated-components>sheet;inputphone</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components>exporter;social;badge;gravatar;letteravatar</primefaces-extensions.deprecated-components>
 
-        <myfaces.version>2.3.7</myfaces.version>
         <owb.version>2.0.21</owb.version>
-        <jetty.version>9.4.35.v20201120</jetty.version>
+        <jetty.version>9.4.36.v20210114</jetty.version>
         <omnifaces.version>3.10.1</omnifaces.version>
-        <hibernate-validator.version>6.1.7.Final</hibernate-validator.version>
+        <hibernate-validator.version>7.0.1.Final</hibernate-validator.version>
     </properties>
 
     <build>
@@ -45,7 +45,7 @@
             <resource>
                 <directory>src/main/webapp</directory>
                 <includes>
-                    <include>**/web.xml</include>
+                    <include>**/*.xml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
@@ -57,7 +57,7 @@
                 <version>${jetty.version}</version>
                 <configuration>
                     <webAppConfig>
-                        <contextPath>/primeext-showcase</contextPath>
+                        <contextPath>/showcase-ext</contextPath>
                         <overrideDescriptor>src/main/webapp/WEB-INF/web-overwrite.xml</overrideDescriptor>
                     </webAppConfig>
                     <webXml>${project.build.directory}/classes/WEB-INF/web.xml</webXml>
@@ -217,7 +217,7 @@
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
-            <version>3.0.0</version>
+            <version>2.3.3</version>
         </dependency>
 
         <!-- Bean Validation -->
@@ -299,35 +299,35 @@
     <profiles>
         <profile>
             <id>myfaces</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <jsf-impl>myfaces</jsf-impl>
-                <jsf-version>${myfaces.version}</jsf-version>
                 <jsf-listener>org.apache.myfaces.webapp.StartupServletContextListener</jsf-listener>
+                <head-renderer>org.apache.myfaces.renderkit.html.HtmlHeadRenderer</head-renderer>
             </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.apache.myfaces.core</groupId>
                     <artifactId>myfaces-api</artifactId>
-                    <version>${myfaces.version}</version>
+                    <version>${apache-faces.version}</version>
                     <scope>compile</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.myfaces.core</groupId>
                     <artifactId>myfaces-impl</artifactId>
-                    <version>${myfaces.version}</version>
+                    <version>${apache-faces.version}</version>
                     <scope>compile</scope>
                 </dependency>
             </dependencies>
         </profile>
         <profile>
             <id>jakarta</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <jsf-impl>jakarta</jsf-impl>
-                <jsf-version>${jakarta-faces.version}</jsf-version>
                 <jsf-listener>com.sun.faces.config.ConfigureListener</jsf-listener>
+                <head-renderer>com.sun.faces.renderkit.html_basic.HeadRenderer</head-renderer>
             </properties>
             <dependencies>
                 <dependency>
