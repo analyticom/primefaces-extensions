@@ -15,6 +15,7 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 
 ### Maven
 
+***
 ##### Release (javax)
 
 ```xml
@@ -27,6 +28,11 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 <dependency>
    <groupId>org.primefaces.extensions</groupId>
    <artifactId>resources-ckeditor</artifactId>
+   <version>${primefaces-extensions.version}</version>
+</dependency>
+<dependency>
+   <groupId>org.primefaces.extensions</groupId>
+   <artifactId>resources-monacoeditor</artifactId>
    <version>${primefaces-extensions.version}</version>
 </dependency>
 ```
