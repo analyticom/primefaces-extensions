@@ -984,6 +984,20 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[
+                    Additional URL parameters that are added to the iframe URL where the framed Monaco editor is loaded.
+                    This may be useful, for example, when you wish to pass additional arguments to the extender script.
+                    Must be either a <code>java.lang.Map&lt;String, String | List&lt;String&gt;&gt;</code> (i.e. a map
+                    where keys are strings and values are strings or lists of strings); or a <code>java.lang.String</code>
+                    with a JavaScript expression that evaluates to an object representing such a map.
+                ]]>
+            </description>
+            <name>iframeUrlParams</name>
+            <required>false</required>
+            <type>java.util.Map</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the scheme (protocol) for that URI. Defaults to <code>inmemory</code>.]]>
             </description>
             <name>scheme</name>
@@ -1556,6 +1570,14 @@
                 <![CDATA[Client side callback to execute when an element's scrollbar is being scrolled.]]>
             </description>
             <name>onscroll</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The placeholder attribute specifies a short hint that describes the expected value of an input field.]]>
+            </description>
+            <name>placeholder</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
@@ -2360,7 +2382,15 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Grouping separator. Default is ','.]]>
+                <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]>
+            </description>
+            <name>locale</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Grouping separator. Default is your locale's default.]]>
             </description>
             <name>separator</name>
             <required>false</required>
@@ -2368,7 +2398,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Decimal seperator. Default is '.'.]]>
+                <![CDATA[Decimal separator. Default is your locale's default.]]>
             </description>
             <name>decimal</name>
             <required>false</required>
